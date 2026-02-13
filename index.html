@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>You Are Truly Special 💖</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+  font-family: 'Segoe UI', sans-serif;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  overflow:hidden;
+  background: radial-gradient(circle at top, #ff9a9e, #fad0c4, #a18cd1);
+}
+
+/* Floating Background Hearts */
+.bg-heart{
+  position:absolute;
+  color:white;
+  opacity:0.3;
+  animation: floatUp linear infinite;
+}
+
+@keyframes floatUp{
+  from{ transform:translateY(100vh); }
+  to{ transform:translateY(-10vh); }
+}
+
+/* Envelope */
+.wrapper{
+  perspective:1000px;
+}
+
+.envelope{
+  width:90vw;
+  max-width:400px;
+  height:250px;
+  background:#ff4b7d;
+  position:relative;
+  border-radius:10px;
+  cursor:pointer;
+  transition:transform 1s;
+  box-shadow:0 20px 40px rgba(0,0,0,0.3);
+}
+
+.envelope::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:#ff6f91;
+  clip-path: polygon(0 0, 50% 50%, 100% 0);
+  transform-origin:top;
+  transition:1s;
+}
+
+.envelope.open::before{
+  transform:rotateX(180deg);
+}
+
+/* Letter */
+.letter{
+  position:absolute;
+  width:90%;
+  max-width:360px;
+  background:white;
+  padding:20px;
+  border-radius:10px;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  transition:0.8s ease;
+  text-align:center;
+  box-shadow:0 15px 35px rgba(0,0,0,0.2);
+}
+
+.envelope.open + .letter{
+  transform:translate(-50%,-50%) scale(1);
+}
+
+h1{
+  font-size:clamp(1.5rem,5vw,2rem);
+  color:#ff4b7d;
+  margin-bottom:15px;
+}
+
+p{
+  font-size:clamp(0.9rem,3vw,1rem);
+  color:#333;
+  line-height:1.6;
+}
+
+/* Sparkle */
+.sparkle{
+  position:absolute;
+  font-size:18px;
+  animation:spark 2s ease forwards;
+}
+
+@keyframes spark{
+  to{
+    transform:translateY(-100px) scale(1.5);
+    opacity:0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+  <div class="envelope" onclick="openEnvelope()"></div>
+  <div class="letter">
+    <h1>💖 For You 💖</h1>
+    <p id="typedText"></p>
+  </div>
+</div>
+
+<script>
+const message = `
+No matter who you are,
+or what today feels like...
+
+You are appreciated.
+You are valued.
+You are important.
+
+Your smile matters.
+Your effort matters.
+Your existence matters.
+
+The world is brighter because you are in it. 🌟
+`;
+
+let index = 0;
+
+function typeWriter(){
+  if(index < message.length){
+    document.getElementById("typedText").innerHTML += message.charAt(index);
+    index++;
+    setTimeout(typeWriter, 35);
+  }
+}
+
+function openEnvelope(){
+  document.querySelector(".envelope").classList.add("open");
+  createSparkles();
+  typeWriter();
+}
+
+function createSparkles(){
+  for(let i=0;i<20;i++){
+    let spark = document.createElement("div");
+    spark.className="sparkle";
+    spark.innerHTML="✨";
+    spark.style.left=Math.random()*100+"vw";
+    spark.style.top=Math.random()*100+"vh";
+    document.body.appendChild(spark);
+    setTimeout(()=>spark.remove(),2000);
+  }
+}
+
+/* Background floating hearts */
+setInterval(()=>{
+  let heart = document.createElement("div");
+  heart.className="bg-heart";
+  heart.innerHTML="💖";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.fontSize=(Math.random()*20+10)+"px";
+  heart.style.animationDuration=(Math.random()*5+5)+"s";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),10000);
+},500);
+</script>
+
+</body>
+</html>
